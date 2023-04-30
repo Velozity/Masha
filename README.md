@@ -25,7 +25,7 @@ you'll need a MySQL server for the database_url
 
 ## Related
 
-This project was made with Trident.JS (Developed by me), a discord bot framework
+This project was made with Trident.JS, a discord bot framework
 
 [Trident.JS](https://github.com/Velozity/trident.js)
 
