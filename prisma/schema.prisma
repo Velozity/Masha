@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Guild {
+  id         String       @id @unique
+  createdAt  DateTime     @default(now())
+  Connection Connection[]
+  Context    Context?
+}
+
+model Context {
+  id      String  @id @unique @default(cuid())
+  name    String?
+  context String? @db.Text
+  rules   String? @db.Text
+  guildId String  @unique
+  Guild   Guild   @relation(fields: [guildId], references: [id])
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model Connection {
+  id          String @id @unique @default(cuid())
+  guild       Guild  @relation(fields: [guildId], references: [id])
+  guildId     String
+  provider    String
+  providerKey String
+
+  createdAt DateTime @default(now())
+
+  @@unique([guildId, provider])
+}
